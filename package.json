@@ -1,0 +1,20 @@
+{
+  "name": "karigami-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Diego Perez",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "async": "^2.0.0-rc.6",
+    "config": "^1.21.0",
+    "debug": "^2.2.0",
+    "socket.io": "^1.4.6"
+  }
+}
