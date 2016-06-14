@@ -456,6 +456,41 @@ describe('Kirigami server', function () {
           }
         );
       });
+
+      it('invokes final function if passed on next', function (done) {
+        target
+        .addDecorator(
+          'test11',
+          function (namespace, message, next) {
+            next(function (namespace, message, status, result, error, next) {
+              try {
+                assert.equal('resolve', status, 'mismatching status');
+                assert.equal('test11', namespace, 'mismatching namespace');
+                assert.equal('magic text', message, 'mismatching message');
+                assert.equal('good result', result, 'mismatching result');
+
+                done();
+              } catch (e) {
+                done(e);
+              }
+            });
+          }
+        );
+
+        target
+        .addHandler(
+          'test11',
+          function (namespace, message, resolve, reject, next) {
+            resolve('good result');
+          }
+        );
+
+        target
+        .process(
+          'test11',
+          'magic text'
+        );
+      });
     });
   });
 });

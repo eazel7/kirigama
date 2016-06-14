@@ -64,12 +64,11 @@ KarigamiServerBus.prototype.process = function (namespace, message) {
   var chain = getHandlers(namespace, this.handlers);
   var decorators = getHandlers(namespace, this.decorators);
 
-
-
   return new Promise(function (resolve, reject) {
     var result;
     var error;
     var done;
+    var finals = [];
 
     async
     .eachSeries(
@@ -78,7 +77,13 @@ KarigamiServerBus.prototype.process = function (namespace, message) {
         decorator,
         callback
       ) {
-        decorator(namespace, message, callback);
+        decorator(namespace, message, function (final) {
+          if (final) {
+            finals.push(final);
+          }
+
+          callback();
+        });
       },
       function (err) {
         if (err) return reject(err);
@@ -117,15 +122,24 @@ KarigamiServerBus.prototype.process = function (namespace, message) {
             );
           },
           function () {
-            if (done === 'reject') {
-              reject(error);
-            } else if (done === 'resolve') {
-              resolve(result);
-            } else {
-              reject('no handlers')
-            }
+            async
+            .eachSeries(
+              finals,
+              function (final, callback) {
+                final(namespace, message, done, result, error, callback);
+              },
+              function (err) {
+                if (done === 'reject') {
+                  reject(error);
+                } else if (done === 'resolve') {
+                  resolve(result);
+                } else {
+                  reject('no handlers')
+                }
+              }
+            );
           }
-        );  
+        );
       }
     );
   });
