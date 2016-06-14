@@ -35,7 +35,7 @@ function getHandlers(namespace, handlers) {
   return final;
 }
 
-function KarigamiServerBus() {
+function KirigamiServerBus() {
   this.handlers = {
     '': []
   };
@@ -44,7 +44,7 @@ function KarigamiServerBus() {
   };
 }
 
-KarigamiServerBus.prototype.addHandler = function (namespace, handler) {
+KirigamiServerBus.prototype.addHandler = function (namespace, handler) {
   if (handler === undefined) {
     handler = namespace;
     namespace = '';
@@ -60,7 +60,7 @@ KarigamiServerBus.prototype.addHandler = function (namespace, handler) {
   this.handlers[namespace].push(handler);
 };
 
-KarigamiServerBus.prototype.process = function (namespace, message) {
+KirigamiServerBus.prototype.process = function (namespace, message) {
   var chain = getHandlers(namespace, this.handlers);
   var decorators = getHandlers(namespace, this.decorators);
 
@@ -145,7 +145,7 @@ KarigamiServerBus.prototype.process = function (namespace, message) {
   });
 };
 
-KarigamiServerBus.prototype.addDecorator = function (namespace, decorator) {
+KirigamiServerBus.prototype.addDecorator = function (namespace, decorator) {
   if (decorator === undefined) {
     decorator = namespace;
     namespace = '';
@@ -161,4 +161,4 @@ KarigamiServerBus.prototype.addDecorator = function (namespace, decorator) {
   this.decorators[namespace].push(decorator);
 };
 
-module.exports = KarigamiServerBus;
+module.exports = KirigamiServerBus;

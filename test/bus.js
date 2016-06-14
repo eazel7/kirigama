@@ -1,4 +1,4 @@
-var Bus = require('../bus');
+var KirigamiServerBus = require('../bus');
 var assert = require('assert');
 
 describe('Kirigami server', function () {
@@ -6,7 +6,7 @@ describe('Kirigami server', function () {
     var target;
 
     it('instantiates', function () {
-      target = new Bus();
+      target = new KirigamiServerBus();
 
       assert(target);
     });
