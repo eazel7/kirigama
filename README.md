@@ -1,4 +1,4 @@
-# Kirigama
+# Kirigami
 
-Kirigama is a message processing pipeline. It is intended to be integrated
+Kirigami is a message processing pipeline. It is intended to be integrated
 with [origami2](https://gitlab.com/origami2/).
